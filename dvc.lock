@@ -1,0 +1,46 @@
+schema: '2.0'
+stages:
+  collect_data:
+    cmd: python data.py
+    deps:
+    - path: data.py
+      hash: md5
+      md5: 8a4ca57abc054198701c1f544895e016
+      size: 2385
+    outs:
+    - path: forecast_weather_data.csv
+      hash: md5
+      md5: a59829364c31a4e1cf550eaff737ed24
+      size: 8863
+  preprocess_data:
+    cmd: python preprocess.py
+    deps:
+    - path: forecast_weather_data.csv
+      hash: md5
+      md5: a59829364c31a4e1cf550eaff737ed24
+      size: 8863
+    - path: preprocess.py
+      hash: md5
+      md5: 30bd5a8d951ea6aef95a4aa9407a83a1
+      size: 563
+    outs:
+    - path: processed_data.csv
+      hash: md5
+      md5: e00f881adcec3690631fada007ac9762
+      size: 11399
+  train_model:
+    cmd: python model.py
+    deps:
+    - path: preprocess.py
+      hash: md5
+      md5: 30bd5a8d951ea6aef95a4aa9407a83a1
+      size: 563
+    - path: processed_data.csv
+      hash: md5
+      md5: e00f881adcec3690631fada007ac9762
+      size: 11399
+    outs:
+    - path: model.pkl
+      hash: md5
+      md5: 83f9f1bed420202ba6d6d604c1c9e70a
+      size: 586
